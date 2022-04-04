@@ -1,12 +1,14 @@
 // All of the DOM elements I'm grabbing
 let squares = document.querySelectorAll('.square')
 console.log(squares);
-let start = document.querySelector('.start')
-// console.log(start)
+let $start = $('.start')
+console.log($start[0])
 let reset = document.querySelector('.reset')
 let illegal = document.querySelector('.illegal')
 let winningDiv = document.querySelector('.winner')
-
+let $gameboard = $('.gameboard');
+console.log($gameboard)
+$gameboard.hide();
 // Global variables that I am setting
 let moves = 0;
 let activeGame = false;
@@ -52,15 +54,14 @@ function anyWinnerYet() {
 //     if(moves === 9) winningDiv.innerHTML = "The game is a tie";
 // }
 
-start.addEventListener('click', () => {
+$start.click(() => {
     // for(let i = 0; i < squares.length; i++) {
     //     squares[i].classList.remove('hidden');
     // }
+    $gameboard.show()
     illegal.innerHTML = ''
     activeGame = true;
 })
-
-
 
 reset.addEventListener('click', () => {
     squares.forEach(square => {
