@@ -9,6 +9,11 @@ let winningDiv = document.querySelector('.winner')
 let $gameboard = $('.gameboard');
 console.log($gameboard)
 $gameboard.hide();
+let $o_wins = $('.o_wins')
+let $x_wins = $('.x_wins')
+// console.log($o_wins)
+// console.log($x_wins)
+
 // Global variables that I am setting
 let moves = 0;
 let activeGame = false;
@@ -23,6 +28,8 @@ let winners = [
     [squares[0], squares[4], squares[8]],
     [squares[2], squares[4], squares[6]],
 ]
+let xWins = 0;
+let oWins = 0;
 // console.log(winners);
 
 // for(let i = 0; i < squares.length; i++) {
@@ -34,19 +41,32 @@ let winners = [
 // }
 
 function anyWinnerYet() {
+    moves++;
     for(let i = 0; i < winners.length; i++) {
         console.log(winners[i]);
         // let myNewVar = "This is something new"
         if(winners[i][0].innerHTML === 'X' && winners[i][1].innerHTML === 'X' && winners[i][2].innerHTML === 'X') {
             winningDiv.innerHTML = "X is the winner!!"
+            xWins++;
+            $x_wins[0].innerHTML = `Wins for X: ${xWins}`
+            console.log(`This just got hit and ${player} won!`)
             activeGame = false;
+            return true
         } else if (winners[i][0].innerHTML === 'O' && winners[i][1].innerHTML === 'O' && winners[i][2].innerHTML === 'O') {
             winningDiv.innerHTML = "O is the winner!!"
+            oWins++;
+            $o_wins[0].innerHTML = `Wins for O: ${oWins}`
             activeGame = false;
+            return true
         } else {
             console.log("No winners yet!")
         }
     }
+    if(moves === 9 && activeGame === true) {
+        winningDiv.innerHTML = "The game is a tie and it's over"
+        activeGame = false;
+    }
+    return false
     // console.log(myNewVar)
 }
 
@@ -101,11 +121,6 @@ squares.forEach(square => {
             }
             anyWinnerYet();
             changePlayer();
-            moves++;
-            if(moves === 9) {
-                winningDiv.innerHTML = "The game is a tie and it's over"
-                activeGame = false;
-            }
             // console.log("I hope this worked");
         } else if(square.innerHTML) {
             illegal.innerHTML = 'YOU ARE A CHEATER!'
