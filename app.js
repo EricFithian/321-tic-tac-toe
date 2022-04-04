@@ -1,14 +1,15 @@
 // All of the DOM elements I'm grabbing
 let squares = document.querySelectorAll('.square')
 console.log(squares);
-let illegal = document.querySelector('.illegal')
 let start = document.querySelector('.start')
+// console.log(start)
 let reset = document.querySelector('.reset')
+let illegal = document.querySelector('.illegal')
 let winningDiv = document.querySelector('.winner')
 
 // Global variables that I am setting
-let count = 0;
-let activeGame = true;
+let moves = 0;
+let activeGame = false;
 let player = 'X'
 let winners = [
     [squares[0], squares[1], squares[2]],
@@ -48,13 +49,15 @@ function anyWinnerYet() {
 }
 
 // function isATie() {
-//     if(count === 9) winningDiv.innerHTML = "The game is a tie";
+//     if(moves === 9) winningDiv.innerHTML = "The game is a tie";
 // }
 
 start.addEventListener('click', () => {
-    for(let i = 0; i < squares.length; i++) {
-        squares[i].classList.remove('hidden')
-    }
+    // for(let i = 0; i < squares.length; i++) {
+    //     squares[i].classList.remove('hidden');
+    // }
+    illegal.innerHTML = ''
+    activeGame = true;
 })
 
 
@@ -66,7 +69,7 @@ reset.addEventListener('click', () => {
         square.classList.remove('red');
         activeGame = true;
         winningDiv.innerHTML = '';
-        count = 0;
+        moves = 0;
         player = 'X'
     })
 })
@@ -80,9 +83,9 @@ function changePlayer () {
     else if(player === 'O') {
         player = 'X';
     }
-    else {
-        console.log("I have no clue whatsoever where I went wrong");
-    }
+    // else {
+    //     console.log("I have no clue whatsoever where I went wrong");
+    // }
 }
 
 squares.forEach(square => {
@@ -90,17 +93,17 @@ squares.forEach(square => {
         if(square.innerHTML === '' && activeGame === true) {
             illegal.innerHTML = ''
             square.innerHTML = player;
-            anyWinnerYet();
-            changePlayer();
-            count++;
-            if(count === 9) {
-                winningDiv.innerHTML = "The game is a tie and it's over"
-                activeGame = false;
-            }
             if(player === 'X') {
                 square.classList.add('red')
             } else {
                 square.classList.add('blue');
+            }
+            anyWinnerYet();
+            changePlayer();
+            moves++;
+            if(moves === 9) {
+                winningDiv.innerHTML = "The game is a tie and it's over"
+                activeGame = false;
             }
             // console.log("I hope this worked");
         } else if(square.innerHTML) {
